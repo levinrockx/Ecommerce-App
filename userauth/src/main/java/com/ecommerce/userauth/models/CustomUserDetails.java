@@ -6,32 +6,39 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 @JsonDeserialize
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private User user;
+    public void setAuthorities(List<CustomGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
     private List<CustomGrantedAuthority> authorities;
     public CustomUserDetails(User user){
         this.user = user;
     }
-    public void setAuthorities(List<CustomGrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<CustomGrantedAuthority> grantedAuthorities = new LinkedList<>();
-        for(Role role: user.getRoles()){
-            grantedAuthorities.add(new CustomGrantedAuthority(role));
-        }
+        List<CustomGrantedAuthority> grantedAuthorities = new ArrayList<>();
+//        for(Role role: user.getRoles()){
+//            grantedAuthorities.add(new CustomGrantedAuthority());
+//        }
+//        Role admin = new Role();
+//        admin.setId(1L);
+//        admin.setName("ADMIN");
+//        grantedAuthorities.add(new CustomGrantedAuthority(admin));
+        grantedAuthorities.add(new CustomGrantedAuthority());
         return grantedAuthorities;
     }
 
     @Override
     public String getPassword() {
+        System.out.println(user.getHashedPassword());
         return user.getHashedPassword();
     }
 

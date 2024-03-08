@@ -7,6 +7,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
@@ -75,9 +76,12 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
             throws Exception {
-        http.authorizeHttpRequests((authorize) -> authorize
+        http
+                .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest().permitAll()
                 )
+                .csrf().disable()
+                .cors().disable()
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
                 .formLogin(Customizer.withDefaults());
@@ -86,6 +90,7 @@ public class SecurityConfig {
     }
 
 //    @Bean
+//    @Primary
 //    public UserDetailsService userDetailsService() {
 //        UserDetails userDetails = User.builder()
 //                .username("user")
@@ -95,8 +100,9 @@ public class SecurityConfig {
 //
 //        return new InMemoryUserDetailsManager(userDetails);
 //    }
-
+//
 //    @Bean
+//    @Primary
 //    public RegisteredClientRepository registeredClientRepository() {
 //        RegisteredClient oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
 //                .clientId("oidc-client")

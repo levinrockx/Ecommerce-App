@@ -2,15 +2,14 @@ package com.ecommerce.userauth.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@ToString
 public class User extends BaseModel{
     private String name;
     private String email;
