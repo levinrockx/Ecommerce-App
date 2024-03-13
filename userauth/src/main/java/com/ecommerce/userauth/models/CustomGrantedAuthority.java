@@ -6,8 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 @JsonDeserialize
 @NoArgsConstructor
 public class CustomGrantedAuthority implements GrantedAuthority {
+
+    private String authority;
     @Override
     public String getAuthority() {
-        return "ADMIN";
+        return "USER";
     }
 }
