@@ -17,8 +17,13 @@ public class UserServiceImpl implements UserService{
         this.passwordEncoder = passwordEncoder;
     }
     public User signUp(String name, String email, String password){
-        User user = new User();
-        return user;
+        User user = User.builder()
+                .name(name)
+                .email(email)
+                .hashedPassword(passwordEncoder.encode(password))
+                .isEmailVerified(false)
+                .build();
+        return userRepo.save(user);
     }
 
     @Override
